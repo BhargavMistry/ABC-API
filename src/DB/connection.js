@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
 mongoose.set("strictQuery", false);
-mongoose.connect(process.env.CONNECTION_URL, {
+mongoose.connect("mongodb+srv://dharasolanki:cs8fnTf0LxCSDnWl@cluster0.sczq14s.mongodb.net/ABCStock", {
   useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
 const con = mongoose.connection;
