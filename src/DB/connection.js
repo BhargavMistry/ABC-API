@@ -1,11 +1,11 @@
-import { set, connect, connection } from "mongoose";
+const mongoose = require("mongoose");
 
-set("strictQuery", false);
-connect(process.env.CONNECTION_URL, {
+mongoose.set("strictQuery", false);
+mongoose.connect(process.env.CONNECTION_URL, {
   useNewUrlParser: true,
 });
 
-const con = connection;
+const con = mongoose.connection;
 
 con.on("error", console.error.bind(console, "connection error!"));
 
