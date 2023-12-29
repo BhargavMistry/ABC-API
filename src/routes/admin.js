@@ -1,29 +1,29 @@
-const express = require("express");
+import { Router } from "express";
 
-const auth = require("../middleware/auth");
-const adminAuth = require("../middleware/admin-auth");
-const categoryValidator = require("../middleware/validation/categoryValidation");
-const contentValidator = require("../middleware/validation/contentValidation");
-const uploadContent = require("../middleware/file-operation/upload-content");
-const uploadCategoryThumbnail = require("../middleware/file-operation/upload-single-file");
+import auth from "../middleware/auth";
+import adminAuth from "../middleware/admin-auth";
+import categoryValidator from "../middleware/validation/categoryValidation";
+import contentValidator from "../middleware/validation/contentValidation";
+import { fields } from "../middleware/file-operation/upload-content";
+import { single } from "../middleware/file-operation/upload-single-file";
 
-const { addCategory, categoryList, updateCategoryById, deleteCategoryById, getAllCategories } = require("../controller/category.controller");
-const { addContent, getContent, updateContent , getAllFiles, deleteContentById} = require("../controller/content.controller");
-const { addContentType, getContentType, updateContentTypeById, deleteContentTypeById } = require("../controller/content-type.controller");
-const { addTag, getAllTag, updateTagById, deleteTagById, getLatestTag, addBulkTags } = require("../controller/tag.controller");
-const { getAllUsers } = require("../controller/user.controller");
-const { getAllFileTypes, updateFileById, addFileType, deleteFileTypeById } = require("../controller/file-type.controller");
-const { getLicense, updateLicenseById, addLicense, deleteLicenseById } = require("../controller/license-type.controller");
-const { addSize, getSizes, updateSizeById, deleteSizeById, addBulkSizes } = require("../controller/size.controller");
-const { bulkFileUpload } = require("../controller/bulk-file-upload.controller");
-const uploadExcelFile = require("../middleware/file-operation/upload-excel");
-const { addWebTerm, getAllWebTerms, updateWebTermById, deleteWebTermById } = require("../controller/website-terms");
-const { addLicenseService, getAllLicenseService, updateLIcenseServiceById, deleteLicenseServiceById } = require("../controller/license-service.controller");
-const { addPrivacyPolicy, getAllPrivacyPolicy, updatePrivacyById, deletePrivacyId } = require("../controller/privacy.controller");
-const { addHelpQuestion, getAllHelpQuestions, updateHelpQuestionById, deleteHelpQuestionById } = require("../controller/help-question.controller");
+import { addCategory, categoryList, updateCategoryById, deleteCategoryById, getAllCategories } from "../controller/category.controller";
+import { addContent, getContent, updateContent, getAllFiles, deleteContentById } from "../controller/content.controller";
+import { addContentType, getContentType, updateContentTypeById, deleteContentTypeById } from "../controller/content-type.controller";
+import { addTag, getAllTag, updateTagById, deleteTagById, getLatestTag, addBulkTags } from "../controller/tag.controller";
+import { getAllUsers } from "../controller/user.controller";
+import { getAllFileTypes, updateFileById, addFileType, deleteFileTypeById } from "../controller/file-type.controller";
+import { getLicense, updateLicenseById, addLicense, deleteLicenseById } from "../controller/license-type.controller";
+import { addSize, getSizes, updateSizeById, deleteSizeById, addBulkSizes } from "../controller/size.controller";
+import { bulkFileUpload } from "../controller/bulk-file-upload.controller";
+import { single as _single } from "../middleware/file-operation/upload-excel";
+import { addWebTerm, getAllWebTerms, updateWebTermById, deleteWebTermById } from "../controller/website-terms";
+import { addLicenseService, getAllLicenseService, updateLIcenseServiceById, deleteLicenseServiceById } from "../controller/license-service.controller";
+import { addPrivacyPolicy, getAllPrivacyPolicy, updatePrivacyById, deletePrivacyId } from "../controller/privacy.controller";
+import { addHelpQuestion, getAllHelpQuestions, updateHelpQuestionById, deleteHelpQuestionById } from "../controller/help-question.controller";
 
-const router = express.Router();
-const uploadFields = uploadContent.fields([{ name : "mainFile" }, { name : "thumbFile" }, { name : "waterMarkFile" }]);
+const router = Router();
+const uploadFields = fields([{ name : "mainFile" }, { name : "thumbFile" }, { name : "waterMarkFile" }]);
 
 router.get("/users", auth, adminAuth, getAllUsers);
 
@@ -34,10 +34,10 @@ router.put("/content", auth, adminAuth, updateContent);
 router.delete("/content/:id", auth, adminAuth,  deleteContentById);
 
 // abc stock category
-router.post("/addcategory", auth, adminAuth, uploadCategoryThumbnail.single("categoryThumbImg"), categoryValidator, addCategory);
+router.post("/addcategory", auth, adminAuth, single("categoryThumbImg"), categoryValidator, addCategory);
 router.get("/categorybycontent/:id",auth,  categoryList);
 router.get("/category", auth, adminAuth, getAllCategories);
-router.put("/category/:id", auth, adminAuth, uploadCategoryThumbnail.single("categoryThumbImg"), categoryValidator, updateCategoryById);
+router.put("/category/:id", auth, adminAuth, single("categoryThumbImg"), categoryValidator, updateCategoryById);
 router.delete("/category/:id", auth, adminAuth, deleteCategoryById);
 
 //abc stock content type
@@ -100,9 +100,9 @@ router.put("/help", auth, adminAuth, updateHelpQuestionById);
 router.delete("/help/:id", auth, adminAuth, deleteHelpQuestionById);
 
 // bulk upload data using excel file.
-router.post("/bulk-upload" , auth , adminAuth ,uploadExcelFile.single("excel-file"),bulkFileUpload)
+router.post("/bulk-upload" , auth , adminAuth ,_single("excel-file"),bulkFileUpload)
 
-module.exports = router;
+export default router;
 
 
 

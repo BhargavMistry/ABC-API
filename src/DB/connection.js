@@ -1,12 +1,11 @@
-const mongoose = require("mongoose");
+import { set, connect, connection } from "mongoose";
 
-mongoose.set("strictQuery", false);
-mongoose.connect("mongodb+srv://dharasolanki:cs8fnTf0LxCSDnWl@cluster0.sczq14s.mongodb.net/ABCStock", {
+set("strictQuery", false);
+connect(process.env.CONNECTION_URL, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
 });
 
-const con = mongoose.connection;
+const con = connection;
 
 con.on("error", console.error.bind(console, "connection error!"));
 
