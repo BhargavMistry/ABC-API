@@ -42,7 +42,7 @@ router.delete("/category/:id", auth, adminAuth, deleteCategoryById);
 
 //abc stock content type
 router.post("/contenttype", auth, adminAuth, addContentType);
-router.get("/contenttype", auth, adminAuth, getContentType);
+router.get("/contenttype", auth, getContentType);
 router.put("/contenttype", auth, adminAuth, updateContentTypeById);
 router.delete("/contenttype/:id", auth, adminAuth,  deleteContentTypeById);
 

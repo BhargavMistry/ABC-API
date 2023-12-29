@@ -24,6 +24,7 @@ const getContentType = async(req , res) => {
     const content_type = await ContentType.aggregate([{ $project: { value: "$_id", label: "$type", _id: 0 } }]);
     return res.status(200).json(content_type);
   } catch (err) {
+    console.log(err,"err err")
     res.status(err?.status || 500).json({
       message: err?.message,
     });
