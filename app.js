@@ -10,15 +10,6 @@ const cors = require('cors');
 
 
 
-// const corsOptions = {
-//   origin: [
-//     "http://localhost:3001",
-//     "http://localhost:3002",
-//     "http://localhost:3003",
-//     "http://localhost:3004",
-//   ],
-// }
-
 const corsOptions = {
   origin: function (origin, callback) {
     callback(null, true);

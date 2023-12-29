@@ -67,7 +67,7 @@ const status = async (req, res, next) => {
 const reGenerateToken = async (req, res) => {
   try {
     const { refresh_token } = req.body;
-    const decoded = jwt.verify(refresh_token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(refresh_token, "c7d6cf0ec2d268fd892e4d1a94322c16c4626f6f512eda28e811b3cc9e58a033d09bc331ddb6f3748a61c13881f1b042");
     const user = await User.findOne({ _id: decoded._id });
     if (user) {
       user.tokens = user.tokens.filter((token) => token.token !== refresh_token);
